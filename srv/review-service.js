@@ -10,10 +10,12 @@ function ruleMatches(ruleLogic, rolesProfiles) {
   return m ? rolesProfiles === m[1] : false;
 }
 
+// ponytail: review chain per the plan — 1st level always forwards to 2nd
+// level for confirmation (any decision); 2nd level only forwards on Escalate,
+// Approve/Reject there is final; Escalation Manager is always final.
 const NEXT_LEVEL = {
   FirstLevel: 'SecondLevel',
   SecondLevel: 'EscalationManager',
-  EscalationManager: 'EscalationManager',
 };
 
 module.exports = class ReviewService extends cds.ApplicationService {
@@ -64,9 +66,12 @@ module.exports = class ReviewService extends cds.ApplicationService {
 
       const actor = actorEmail && await SELECT.one.from(Users).where({ email: actorEmail });
       const patch = { reasonForApproval, comments };
+      const nextLevel = decision === 'Escalated' || record.reviewLevel === 'FirstLevel'
+        ? NEXT_LEVEL[record.reviewLevel]
+        : undefined;
 
-      if (decision === 'Escalated') {
-        patch.reviewLevel = NEXT_LEVEL[record.reviewLevel] || record.reviewLevel;
+      if (nextLevel) {
+        patch.reviewLevel = nextLevel;
         patch.decision = 'Pending';
       } else {
         patch.decision = decision;

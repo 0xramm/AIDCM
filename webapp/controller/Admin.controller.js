@@ -18,7 +18,11 @@ sap.ui.define([
         },
 
         _addRow(sTableId, oDefaults) {
-            this.byId(sTableId).getBinding("items").create(oDefaults);
+            const oContext = this.byId(sTableId).getBinding("items").create(oDefaults);
+            // ponytail: the mapping dropdowns are separate list bindings to the same
+            // /Controls, /Systems, etc. paths — they don't see writes from this table's
+            // binding until the model is refreshed. Fine at this data volume.
+            oContext.created().then(() => this.getView().getModel("admin").refresh());
         },
 
         onAddSector() {
@@ -38,7 +42,8 @@ sap.ui.define([
         },
 
         onDeleteRow(oEvent) {
-            oEvent.getSource().getBindingContext("admin").delete();
+            oEvent.getSource().getBindingContext("admin").delete()
+                .then(() => this.getView().getModel("admin").refresh());
         },
 
         async onRunControlScan() {

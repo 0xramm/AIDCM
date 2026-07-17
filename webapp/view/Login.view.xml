@@ -2,14 +2,12 @@
     controllerName="aidcm.controller.Login"
     displayBlock="true"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core">
+    xmlns="sap.m">
     <Page showHeader="false" class="aidcmLoginPage">
         <HBox class="aidcmLoginWrap" justifyContent="Center" alignItems="Center" height="100%">
             <HBox class="aidcmLoginCard" height="420px" width="760px">
                 <VBox class="aidcmLoginBrand" width="50%" height="100%" justifyContent="Center" alignItems="Center">
-                    <core:Icon src="sap-icon://shield" size="3rem" color="#fff" />
-                    <Title text="Anshiya Innovations" titleStyle="H2" level="H2" class="sapUiTinyMarginTop" />
+                    <Title text="Anshiya Innovations" titleStyle="H2" level="H2" />
                     <Text text="AI Enabled Control and Automated SOX Monitoring" textAlign="Center" class="sapUiTinyMarginTop aidcmLoginTagline" />
                 </VBox>
                 <VBox width="50%" height="100%" justifyContent="Center" class="sapUiLargeMarginBeginEnd">
