@@ -76,6 +76,8 @@ sap.ui.define([
 
         onLogout() {
             this.getOwnerComponent().getModel("session").setData({});
+            // eslint-disable-next-line @sap-ux/fiori-tools/sap-no-sessionstorage -- see Component.js
+            sessionStorage.removeItem("aidcmSession");
             this.getOwnerComponent().getRouter().navTo("RouteLogin");
         }
     });

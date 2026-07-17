@@ -10,7 +10,7 @@
             <Button text="Run Control Scan" icon="sap-icon://simulate" press="onRunControlScan" />
             <Button text="Logout" icon="sap-icon://log" press="onLogout" />
         </headerContent>
-        <IconTabBar id="adminTabBar" expandable="false">
+        <IconTabBar id="adminTabBar" expandable="false" select="onTabSelect">
             <items>
                 <IconTabFilter key="sectorsRegions" text="Business Sectors &amp; Regions" icon="sap-icon://world">
                     <HBox>

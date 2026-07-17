@@ -18,11 +18,7 @@ sap.ui.define([
         },
 
         _addRow(sTableId, oDefaults) {
-            const oContext = this.byId(sTableId).getBinding("items").create(oDefaults);
-            // ponytail: the mapping dropdowns are separate list bindings to the same
-            // /Controls, /Systems, etc. paths — they don't see writes from this table's
-            // binding until the model is refreshed. Fine at this data volume.
-            oContext.created().then(() => this.getView().getModel("admin").refresh());
+            this.byId(sTableId).getBinding("items").create(oDefaults);
         },
 
         onAddSector() {
@@ -42,8 +38,18 @@ sap.ui.define([
         },
 
         onDeleteRow(oEvent) {
-            oEvent.getSource().getBindingContext("admin").delete()
-                .then(() => this.getView().getModel("admin").refresh());
+            oEvent.getSource().getBindingContext("admin").delete();
+        },
+
+        // ponytail: the mapping dropdowns (Business Sector/Region/System/Control Selects)
+        // are separate list bindings from the master-data tables, so they go stale after
+        // an add/delete elsewhere. Refreshing on every write raced with in-progress edits
+        // (a create()'s auto-refresh could revert a rename typed right after). Refreshing
+        // only when the Mapping tab is opened avoids that race and is good enough here.
+        onTabSelect(oEvent) {
+            if (oEvent.getParameter("key") === "mapping") {
+                this.getView().getModel("admin").refresh();
+            }
         },
 
         async onRunControlScan() {
@@ -55,6 +61,8 @@ sap.ui.define([
 
         onLogout() {
             this.getOwnerComponent().getModel("session").setData({});
+            // eslint-disable-next-line @sap-ux/fiori-tools/sap-no-sessionstorage -- see Component.js
+            sessionStorage.removeItem("aidcmSession");
             this.getOwnerComponent().getRouter().navTo("RouteLogin");
         }
     });

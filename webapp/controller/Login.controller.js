@@ -30,6 +30,8 @@ sap.ui.define([
 
                 const oUser = oBinding.getBoundContext().getObject();
                 this.getOwnerComponent().getModel("session").setData(oUser);
+                // eslint-disable-next-line @sap-ux/fiori-tools/sap-no-sessionstorage -- see Component.js
+                sessionStorage.setItem("aidcmSession", JSON.stringify(oUser));
 
                 const fnTarget = ROUTE_BY_ROLE[oUser.role];
                 if (!fnTarget) {
