@@ -1,0 +1,49 @@
+<mvc:View
+    controllerName="aidcm.controller.Reviewer"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page title="{page>/title}" class="sapUiContentPadding">
+        <headerContent>
+            <Text text="{session>/fullName}" class="sapUiTinyMarginEnd" />
+            <Button text="Logout" icon="sap-icon://log" press="onLogout" />
+        </headerContent>
+        <Table id="reviewTable" items="{review>/ReviewRecords}" noDataText="No items pending review.">
+            <columns>
+                <Column><Text text="Business Sector" /></Column>
+                <Column><Text text="Region" /></Column>
+                <Column><Text text="System" /></Column>
+                <Column><Text text="Control" /></Column>
+                <Column><Text text="Control Description" /></Column>
+                <Column><Text text="User ID" /></Column>
+                <Column><Text text="Role/Permissions" /></Column>
+                <Column><Text text="Decision" /></Column>
+                <Column><Text text="Reason" /></Column>
+                <Column><Text text="Comments" /></Column>
+                <Column hAlign="Center"><Text text="Actions" /></Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{review>businessSector/name}" />
+                        <Text text="{review>region/name}" />
+                        <Text text="{review>system/name}" />
+                        <Text text="{review>control/code}" />
+                        <Text text="{review>control/description}" />
+                        <Text text="{review>sourceUser/sourceUserId}" />
+                        <Text text="{review>rolePermissions}" />
+                        <ObjectStatus text="{review>decision}" state="{path: 'review>decision', formatter: '.formatDecisionState'}" />
+                        <Input value="{review>reasonForApproval}" />
+                        <Input value="{review>comments}" />
+                        <HBox>
+                            <Button icon="sap-icon://accept" type="Accept" tooltip="Approve" press="onApprove" class="sapUiTinyMarginEnd" />
+                            <Button icon="sap-icon://decline" type="Reject" tooltip="Reject" press="onReject" class="sapUiTinyMarginEnd" />
+                            <Button icon="sap-icon://arrow-top" tooltip="Escalate" press="onEscalate" enabled="{= ${review>reviewLevel} !== 'EscalationManager'}" />
+                        </HBox>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

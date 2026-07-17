@@ -1,0 +1,158 @@
+<mvc:View
+    controllerName="aidcm.controller.Admin"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    <Page title="AIDCM Administration" class="sapUiContentPadding">
+        <headerContent>
+            <Text text="{session>/fullName} (Administrator)" class="sapUiTinyMarginEnd" />
+            <Button text="Run Control Scan" icon="sap-icon://simulate" press="onRunControlScan" />
+            <Button text="Logout" icon="sap-icon://log" press="onLogout" />
+        </headerContent>
+        <IconTabBar id="adminTabBar" expandable="false">
+            <items>
+                <IconTabFilter key="sectorsRegions" text="Business Sectors &amp; Regions" icon="sap-icon://world">
+                    <HBox>
+                        <VBox width="50%" class="sapUiTinyMarginEnd">
+                            <Toolbar>
+                                <Title text="Business Sectors" level="H3" />
+                                <ToolbarSpacer />
+                                <Button icon="sap-icon://add" text="Add" press="onAddSector" />
+                            </Toolbar>
+                            <Table id="sectorsTable" items="{admin>/BusinessSectors}">
+                                <columns>
+                                    <Column><Text text="Name" /></Column>
+                                    <Column hAlign="End"><Text text="" /></Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Input value="{admin>name}" />
+                                            <Button icon="sap-icon://delete" type="Transparent" press="onDeleteRow" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </VBox>
+                        <VBox width="50%">
+                            <Toolbar>
+                                <Title text="Regions" level="H3" />
+                                <ToolbarSpacer />
+                                <Button icon="sap-icon://add" text="Add" press="onAddRegion" />
+                            </Toolbar>
+                            <Table id="regionsTable" items="{admin>/Regions}">
+                                <columns>
+                                    <Column><Text text="Code" /></Column>
+                                    <Column><Text text="Name" /></Column>
+                                    <Column hAlign="End"><Text text="" /></Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Input value="{admin>code}" />
+                                            <Input value="{admin>name}" />
+                                            <Button icon="sap-icon://delete" type="Transparent" press="onDeleteRow" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </VBox>
+                    </HBox>
+                </IconTabFilter>
+
+                <IconTabFilter key="systems" text="Systems" icon="sap-icon://database">
+                    <Toolbar>
+                        <ToolbarSpacer />
+                        <Button icon="sap-icon://add" text="Add System" press="onAddSystem" />
+                    </Toolbar>
+                    <Table id="systemsTable" items="{admin>/Systems}">
+                        <columns>
+                            <Column><Text text="Name" /></Column>
+                            <Column><Text text="Connection Type" /></Column>
+                            <Column hAlign="End"><Text text="" /></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Input value="{admin>name}" />
+                                    <Select selectedKey="{admin>connectionType}">
+                                        <core:Item key="CloudConnector" text="Cloud Connector" xmlns:core="sap.ui.core" />
+                                        <core:Item key="DirectDB" text="Direct DB" xmlns:core="sap.ui.core" />
+                                    </Select>
+                                    <Button icon="sap-icon://delete" type="Transparent" press="onDeleteRow" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </IconTabFilter>
+
+                <IconTabFilter key="controls" text="Controls" icon="sap-icon://validate">
+                    <Toolbar>
+                        <ToolbarSpacer />
+                        <Button icon="sap-icon://add" text="Add Control" press="onAddControl" />
+                    </Toolbar>
+                    <Table id="controlsTable" items="{admin>/Controls}">
+                        <columns>
+                            <Column><Text text="Code" /></Column>
+                            <Column><Text text="Description" /></Column>
+                            <Column><Text text="System" /></Column>
+                            <Column><Text text="Rule Logic" /></Column>
+                            <Column hAlign="End"><Text text="" /></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Input value="{admin>code}" />
+                                    <Input value="{admin>description}" />
+                                    <Select selectedKey="{admin>system_ID}" items="{admin>/Systems}" forceSelection="false">
+                                        <core:Item key="{admin>ID}" text="{admin>name}" xmlns:core="sap.ui.core" />
+                                    </Select>
+                                    <Input value="{admin>ruleLogic}" />
+                                    <Button icon="sap-icon://delete" type="Transparent" press="onDeleteRow" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </IconTabFilter>
+
+                <IconTabFilter key="mapping" text="System &amp; Controls" icon="sap-icon://chain-link">
+                    <Toolbar>
+                        <ToolbarSpacer />
+                        <Button icon="sap-icon://add" text="Add Mapping" press="onAddMapping" />
+                    </Toolbar>
+                    <Table id="mappingTable" items="{admin>/SystemControlMapping}">
+                        <columns>
+                            <Column><Text text="Business Sector" /></Column>
+                            <Column><Text text="Region" /></Column>
+                            <Column><Text text="System" /></Column>
+                            <Column><Text text="Control" /></Column>
+                            <Column><Text text="Active" /></Column>
+                            <Column hAlign="End"><Text text="" /></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Select selectedKey="{admin>businessSector_ID}" items="{admin>/BusinessSectors}" forceSelection="false">
+                                        <core:Item key="{admin>ID}" text="{admin>name}" xmlns:core="sap.ui.core" />
+                                    </Select>
+                                    <Select selectedKey="{admin>region_ID}" items="{admin>/Regions}" forceSelection="false">
+                                        <core:Item key="{admin>ID}" text="{admin>name}" xmlns:core="sap.ui.core" />
+                                    </Select>
+                                    <Select selectedKey="{admin>system_ID}" items="{admin>/Systems}" forceSelection="false">
+                                        <core:Item key="{admin>ID}" text="{admin>name}" xmlns:core="sap.ui.core" />
+                                    </Select>
+                                    <Select selectedKey="{admin>control_ID}" items="{admin>/Controls}" forceSelection="false">
+                                        <core:Item key="{admin>ID}" text="{admin>code}" xmlns:core="sap.ui.core" />
+                                    </Select>
+                                    <CheckBox selected="{admin>active}" />
+                                    <Button icon="sap-icon://delete" type="Transparent" press="onDeleteRow" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </IconTabFilter>
+            </items>
+        </IconTabBar>
+    </Page>
+</mvc:View>

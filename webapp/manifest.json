@@ -14,6 +14,29 @@
       "id": "@sap/generator-fiori:basic",
       "version": "1.28.0",
       "toolsId": "034ce29f-3e63-4a80-8f11-151142376b11"
+    },
+    "dataSources": {
+      "admin": {
+        "uri": "/odata/v4/admin/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      },
+      "auth": {
+        "uri": "/odata/v4/auth/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      },
+      "review": {
+        "uri": "/odata/v4/review/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
     }
   },
   "sap.ui": {
@@ -38,7 +61,8 @@
       "minUI5Version": "1.150.0",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.f": {}
       }
     },
     "contentDensities": {
@@ -50,6 +74,34 @@
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
           "bundleName": "aidcm.i18n.i18n"
+        }
+      },
+      "admin": {
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "dataSource": "admin",
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": false
+        }
+      },
+      "auth": {
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "dataSource": "auth",
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server"
+        }
+      },
+      "review": {
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "dataSource": "review",
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": false
         }
       }
     },
@@ -74,17 +126,33 @@
       },
       "routes": [
         {
-          "name": "RouteView1",
-          "pattern": ":?query:",
-          "target": [
-            "TargetView1"
-          ]
+          "name": "RouteLogin",
+          "pattern": "",
+          "target": ["TargetLogin"]
+        },
+        {
+          "name": "RouteAdmin",
+          "pattern": "admin",
+          "target": ["TargetAdmin"]
+        },
+        {
+          "name": "RouteReview",
+          "pattern": "review/{level}",
+          "target": ["TargetReview"]
         }
       ],
       "targets": {
-        "TargetView1": {
-          "id": "View1",
-          "name": "View1"
+        "TargetLogin": {
+          "id": "Login",
+          "name": "Login"
+        },
+        "TargetAdmin": {
+          "id": "Admin",
+          "name": "Admin"
+        },
+        "TargetReview": {
+          "id": "Reviewer",
+          "name": "Reviewer"
         }
       }
     },

@@ -1,0 +1,27 @@
+<mvc:View
+    controllerName="aidcm.controller.Login"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page showHeader="false" class="aidcmLoginPage">
+        <HBox class="aidcmLoginWrap" justifyContent="Center" alignItems="Center" height="100%">
+            <HBox class="aidcmLoginCard" height="420px" width="760px">
+                <VBox class="aidcmLoginBrand" width="50%" height="100%" justifyContent="Center" alignItems="Center">
+                    <core:Icon src="sap-icon://shield" size="3rem" color="#fff" />
+                    <Title text="Anshiya Innovations" titleStyle="H2" level="H2" class="sapUiTinyMarginTop" />
+                    <Text text="AI Enabled Control and Automated SOX Monitoring" textAlign="Center" class="sapUiTinyMarginTop aidcmLoginTagline" />
+                </VBox>
+                <VBox width="50%" height="100%" justifyContent="Center" class="sapUiLargeMarginBeginEnd">
+                    <Title text="Sign in" titleStyle="H3" level="H3" class="sapUiMediumMarginBottom" />
+                    <Label text="Email" labelFor="email" />
+                    <Input id="email" type="Email" value="{login>/email}" class="sapUiTinyMarginBottom" submit="onLogin" />
+                    <Label text="Password" labelFor="password" />
+                    <Input id="password" type="Password" value="{login>/password}" class="sapUiTinyMarginBottom" submit="onLogin" />
+                    <Text text="{login>/error}" class="aidcmLoginError" visible="{= !!${login>/error} }" />
+                    <Button text="Login" type="Emphasized" press="onLogin" class="sapUiMediumMarginTop" busy="{login>/busy}" />
+                </VBox>
+            </HBox>
+        </HBox>
+    </Page>
+</mvc:View>

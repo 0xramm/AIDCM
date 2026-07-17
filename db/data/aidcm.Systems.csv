@@ -1,0 +1,4 @@
+ID,name,connectionType
+719f0656-b69a-4457-aec4-a79f7887c1c5,SAP S/4,CloudConnector
+b8826a6f-4a6f-4873-980e-33c7c6a03753,Oracle,DirectDB
+334ddee4-1ba0-4969-b7b0-2de9259e0bec,ERP JDA,DirectDB

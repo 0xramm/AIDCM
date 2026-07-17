@@ -8,14 +8,19 @@
     "sapui5"
   ],
   "main": "webapp/index.html",
-  "dependencies": {},
+  "dependencies": {
+    "@cap-js/sqlite": "^1",
+    "@sap/cds": "^8"
+  },
   "devDependencies": {
     "@ui5/cli": "^4.0.33",
+    "@sap/cds-dk": "^8",
     "@sap/ux-ui5-tooling": "1",
     "@sap-ux/eslint-plugin-fiori-tools": "^10.0.0",
     "eslint": "^10"
   },
   "scripts": {
+    "watch": "cds watch",
     "start": "fiori run --open \"test/flp.html#app-preview\"",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flp.html#app-preview\"",
     "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
@@ -27,5 +32,13 @@
     "start-variants-management": "fiori run --open \"/preview.html#app-preview\"",
     "unit-test": "fiori run --open \"test/unit/unitTests.qunit.html\""
   },
-  "sapuxLayer": "CUSTOMER_BASE"
+  "sapuxLayer": "CUSTOMER_BASE",
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": { "url": "db/aidcm.db" }
+      }
+    }
+  }
 }
